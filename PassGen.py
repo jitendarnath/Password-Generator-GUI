@@ -108,11 +108,5 @@ m2.add_command(label="Help", command=window.quit)
 main_menu.add_cascade(label="Options",menu=m2)
 
 window.config(menu=main_menu)
-
-#writing to files
-# with open("records.txt","a") as f:
-#     f.write(f"{title.get(), username.get(), password.get()}\n")
-#display Window
-
     
 window.mainloop()
