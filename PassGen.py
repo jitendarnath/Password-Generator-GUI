@@ -12,12 +12,22 @@ def pass_gen():
 
 def save_pass():
     msg=tmsg.askquestion("Save As","Do you want to save?")
-    print(msg)
+    with open("D:\\Programming\\Python\\Project\\records.txt","a") as f:
+        f.write(f"\n{account_name.get(), username.get(), password_entry.get()}")
+        f.close()
+    print("Saved Changes ..!!")
 
+def records():
+    top= Toplevel()
+    top.title('Records')
+    top.geometry("850x500")
+    top.iconbitmap("Images/logo.ico")
+    top.config(background='#002447')
+    
 #Defining the Window
 window = Tk()
 window.title("Pass-Gen")
-window.geometry("850x500")
+window.geometry("850x550")
 window.iconbitmap("Images/logo.ico")
 window.config(background='#002447')
 
@@ -45,19 +55,37 @@ myslider=Scale(right_frame, from_=5, to=20,orient=HORIZONTAL,tickinterval=5,bg='
 myslider.pack(fill=X)
 
 #appearing password text box
-password_entry = Entry(right_frame,font=("Helvetica",20),bg='#002447',fg='PeachPuff')
-password_entry.pack(fill=X, pady=10)
+right_sub_frame1= Frame(right_frame, bg='#002447')
+
+password_entry = Entry(right_sub_frame1,font=("Courier New",19),bg='#002447',fg='PeachPuff')
+password_entry.grid(row=0,column=0,ipady=3)
+password_entry.insert(0," Click Generate -->")
+
+generate_password_button = Button(right_sub_frame1,text="Generate",font=("Helvetica",14),bg='white',fg='#002447',command=pass_gen,relief=RAISED)
+generate_password_button.grid(row=0,column=1)
+
+
+right_sub_frame1.pack(pady=15)
+
+right_sub_frame2= LabelFrame(right_frame,text=" Store Password : ",font=("Helvetica",14), bg='#002447',fg='light blue',padx=15,pady=10)
+
+account_name = Entry(right_sub_frame2,font=("Helvetica",15),bg='#002447',fg='PeachPuff')
+account_name.grid(row=0,columnspan=2,sticky="we",pady=5,ipadx=22,ipady=3)
+account_name.insert(0," Enter account name")
+
+username = Entry(right_sub_frame2,font=("Helvetica",15),bg='#002447',fg='PeachPuff')
+username.grid(row=1,column=0,pady=5,ipadx=22,ipady=3)
+username.insert(0," Enter username")
+
+save_pw_button = Button(right_sub_frame2,text="Save",font=("Helvetica",12),bg='white',fg='#002447',command=save_pass,relief=RAISED)
+save_pw_button.grid(row=1,column=1,ipadx=15,ipady=0)
+
+right_sub_frame2.pack(fill=X)
+
+right_frame.grid(row=0, column=1,sticky=W)
 
 footer_title = Label(text="2020 | Jitendar Nath | VIT", font="Sanseriff 10",bg='#002447',fg='grey',borderwidth=1,relief=RIDGE,pady=5)
 footer_title.pack(side=BOTTOM,fill=X)
-
-generate_password_button = Button(right_frame,text="Generate",font=("Helvetica",20),bg='#002447',fg='white',command=pass_gen,borderwidth=5,relief=RAISED)
-generate_password_button.pack(fill=X)
-
-save_pw_button = Button(right_frame,text="Save",font=("Helvetica",20),bg='#002447',fg='white')
-save_pw_button.pack(fill=X)
-
-right_frame.grid(row=0, column=1,sticky=W)
 
 frame.pack(expand=YES)
 
@@ -74,10 +102,11 @@ main_menu.add_cascade(label="Menu",menu=m1)
 window.config(menu=main_menu)
 
 m2 = Menu(main_menu,tearoff=0)
-m2.add_command(label="Log", command=window.quit)
+m2.add_command(label="Log", command=records)
 m2.add_command(label="Help", command=window.quit)
 
 main_menu.add_cascade(label="Options",menu=m2)
+
 window.config(menu=main_menu)
 
 #writing to files
